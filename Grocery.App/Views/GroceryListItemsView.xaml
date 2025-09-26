@@ -54,7 +54,16 @@
 
         <Border Grid.Row="1" Grid.Column="1" Stroke="#C49B33" StrokeThickness="4" Padding="5" Margin="5" HorizontalOptions="Center">
             <StackLayout>
-                <CollectionView ItemsSource="{Binding AvailableProducts}" Margin="5" WidthRequest="300" HorizontalOptions="Start"
+                <!-- SearchBar for UC08 Product Search -->
+                <SearchBar x:Name="ProductSearchBar" 
+                          Placeholder="Zoek producten..." 
+                          Text="{Binding SearchText}"
+                          SearchCommand="{Binding SearchProductsCommand}"
+                          SearchCommandParameter="{Binding Source={x:Reference ProductSearchBar}, Path=Text}"
+                          Margin="5,5,5,10"
+                          BackgroundColor="LightGray"/>
+                          
+                <CollectionView ItemsSource="{Binding FilteredProducts}" Margin="5" WidthRequest="300" HorizontalOptions="Start"
                     SelectionMode="Single"
                     SelectionChangedCommand="{Binding AddProductCommand}"
                     SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
@@ -76,7 +85,7 @@
                     <CollectionView.EmptyView>
                         <ContentView>
                             <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                                <Label Text="Er zijn geen producten meer om toe te voegen" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                <Label Text="Er zijn geen producten gevonden" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
                         </ContentView>
                     </CollectionView.EmptyView>
